@@ -1,4 +1,4 @@
-# String Master Library
+# String Utilities Library
 
 <p>This documentation provides an overview of the various string manipulation functions available in the library. These functions cover a wide range of functionality, from simple capitalization and word counting to more advanced operations such as finding anagrams and longest common substrings.</p>
  
@@ -127,7 +127,7 @@ npm install string-master
 ## `capitalize`
 
 ```
-import { capitalize } from 'string-master';
+import { capitalize } from 'ts-string-utilities';
 
 capitalize('hello world'); // 'Hello world'
 ```
@@ -135,7 +135,7 @@ capitalize('hello world'); // 'Hello world'
 ## `commonSubstring`
 
 ```
-import { commonSubstring } from 'string-master';
+import { commonSubstring } from 'ts-string-utilities';
 
 commonSubstring('hello world', 'hello world'); // 'hello world'
 ```
@@ -143,7 +143,7 @@ commonSubstring('hello world', 'hello world'); // 'hello world'
 ## `countOccurrences`
 
 ```
-import { countOccurrences } from 'string-master';
+import { countOccurrences } from 'ts-string-utilities';
 
 countOccurrences('hello world', 'l'); // 3
 ```
@@ -151,7 +151,7 @@ countOccurrences('hello world', 'l'); // 3
 ## `countWords`
 
 ```
-import { countWords } from 'string-master';
+import { countWords } from 'ts-string-utilities';
 
 countWords('hello world'); // 2
 ```
@@ -159,7 +159,7 @@ countWords('hello world'); // 2
 ## `countWordsInString`
 
 ```
-import { countWordsInString } from 'string-master';
+import { countWordsInString } from 'ts-string-utilities';
 
 countWordsInString('hello world'); // 2
 ```
@@ -167,7 +167,7 @@ countWordsInString('hello world'); // 2
 ## `endsWith`
 
 ```
-import { endsWith } from 'string-master';
+import { endsWith } from 'ts-string-utilities';
 
 endsWith('hello world', 'world'); // true
 ```
@@ -175,7 +175,7 @@ endsWith('hello world', 'world'); // true
 ## `findAllIndexes`
 
 ```
-import { findAllIndexes } from 'string-master';
+import { findAllIndexes } from 'ts-string-utilities';
 
 findAllIndexes('hello world', 'l'); // [2, 3, 9]
 ```
@@ -183,7 +183,7 @@ findAllIndexes('hello world', 'l'); // [2, 3, 9]
 ## `findIndex`
 
 ```
-import { findIndex } from 'string-master';
+import { findIndex } from 'ts-string-utilities';
 
 findIndex('hello world', 'l'); // 2
 ```
@@ -191,7 +191,7 @@ findIndex('hello world', 'l'); // 2
 ## `format`
 
 ```
-import { format } from 'string-master';
+import { format } from 'ts-string-utilities';
 
 format('hello {0}', 'world'); // 'hello world'
 ```
@@ -199,7 +199,7 @@ format('hello {0}', 'world'); // 'hello world'
 ## `getAllPosition`
 
 ```
-import { getAllPosition } from 'string-master';
+import { getAllPosition } from 'ts-string-utilities';
 
 getAllPosition('hello world', 'l'); // [2, 3, 9]
 ```
@@ -207,7 +207,7 @@ getAllPosition('hello world', 'l'); // [2, 3, 9]
 ## `getAnagrams`
 
 ```
-import { getAnagrams } from 'string-master';
+import { getAnagrams } from 'ts-string-utilities';
 
 getAnagrams('hello world'); // ['hello world', 'world hello']
 ```
@@ -215,7 +215,7 @@ getAnagrams('hello world'); // ['hello world', 'world hello']
 ## `getCharFrequency`
 
 ```
-import { getCharFrequency } from 'string-master';
+import { getCharFrequency } from 'ts-string-utilities';
 
 getCharFrequency('hello world'); // { h: 1, e: 1, l: 3, o: 2, w: 1, r: 1, d: 1 }
 ```
@@ -223,7 +223,7 @@ getCharFrequency('hello world'); // { h: 1, e: 1, l: 3, o: 2, w: 1, r: 1, d: 1 }
 ## `getCommonPrefix`
 
 ```
-import { getCommonPrefix } from 'string-master';
+import { getCommonPrefix } from 'ts-string-utilities';
 
 getCommonPrefix('hello world', 'hello world'); // 'hello world'
 ```
@@ -231,7 +231,7 @@ getCommonPrefix('hello world', 'hello world'); // 'hello world'
 ## `getCommonSuffix`
 
 ```
-import { getCommonSuffix } from 'string-master';
+import { getCommonSuffix } from 'ts-string-utilities';
 
 getCommonSuffix('hello world', 'hello world'); // 'hello world'
 ```
@@ -239,7 +239,7 @@ getCommonSuffix('hello world', 'hello world'); // 'hello world'
 ## `getDigitCount`
 
 ```
-import { getDigitCount } from 'string-master';
+import { getDigitCount } from 'ts-string-utilities';
 
 getDigitCount('hello world'); // 0
 ```
@@ -247,7 +247,7 @@ getDigitCount('hello world'); // 0
 ## `getFirstChar`
 
 ```
-import { getFirstChar } from 'string-master';
+import { getFirstChar } from 'ts-string-utilities';
 
 getFirstChar('hello world'); // 'h'
 ```
@@ -255,7 +255,7 @@ getFirstChar('hello world'); // 'h'
 ## `getLastChar`
 
 ```
-import { getLastChar } from 'string-master';
+import { getLastChar } from 'ts-string-utilities';
 
 getLastChar('hello world'); // 'd'
 ```
@@ -263,7 +263,7 @@ getLastChar('hello world'); // 'd'
 ## `getLetterCount`
 
 ```
-import { getLetterCount } from 'string-master';
+import { getLetterCount } from 'ts-string-utilities';
 
 getLetterCount('hello world'); // 10
 ```
@@ -271,7 +271,7 @@ getLetterCount('hello world'); // 10
 ## `getLongestCommonSubstring`
 
 ```
-import { getLongestCommonSubstring } from 'string-master';
+import { getLongestCommonSubstring } from 'ts-string-utilities';
 
 getLongestCommonSubstring('hello world', 'hello world'); // 'hello world'
 ```
@@ -279,7 +279,7 @@ getLongestCommonSubstring('hello world', 'hello world'); // 'hello world'
 ## `getLongestWord`
 
 ```
-import { getLongestWord } from 'string-master';
+import { getLongestWord } from 'ts-string-utilities';
 
 getLongestWord('hello world'); // 'hello'
 ```
@@ -287,7 +287,7 @@ getLongestWord('hello world'); // 'hello'
 ## `getMatchingWords`
 
 ```
-import { getMatchingWords } from 'string-master';
+import { getMatchingWords } from 'ts-string-utilities';
 
 getMatchingWords('hello world', 'hello world'); // ['hello', 'world']
 ```
@@ -295,7 +295,7 @@ getMatchingWords('hello world', 'hello world'); // ['hello', 'world']
 ## `getRandomSubstring`
 
 ```
-import { getRandomSubstring } from 'string-master';
+import { getRandomSubstring } from 'ts-string-utilities';
 
 getRandomSubstring('hello world'); // 'hello'
 ```
@@ -303,7 +303,7 @@ getRandomSubstring('hello world'); // 'hello'
 ## `getShortestWord`
 
 ```
-import { getShortestWord } from 'string-master';
+import { getShortestWord } from 'ts-string-utilities';
 
 getShortestWord('hello world'); // 'world'
 ```
@@ -311,7 +311,7 @@ getShortestWord('hello world'); // 'world'
 ## `getSpecialCharCount`
 
 ```
-import { getSpecialCharCount } from 'string-master';
+import { getSpecialCharCount } from 'ts-string-utilities';
 
 getSpecialCharCount('hello world'); // 0
 ```
@@ -319,7 +319,7 @@ getSpecialCharCount('hello world'); // 0
 ## `getStringDistance`
 
 ```
-import { getStringDistance } from 'string-master';
+import { getStringDistance } from 'ts-string-utilities';
 
 getStringDistance('hello world', 'hello world'); // 0
 ```
@@ -327,7 +327,7 @@ getStringDistance('hello world', 'hello world'); // 0
 ## `getUniqueChars`
 
 ```
-import { getUniqueChars } from 'string-master';
+import { getUniqueChars } from 'ts-string-utilities';
 
 getUniqueChars('hello world'); // ['h', 'e', 'l', 'o', 'w', 'r', 'd']
 ```
@@ -335,7 +335,7 @@ getUniqueChars('hello world'); // ['h', 'e', 'l', 'o', 'w', 'r', 'd']
 ## `getWordCount`
 
 ```
-import { getWordCount } from 'string-master';
+import { getWordCount } from 'ts-string-utilities';
 
 getWordCount('hello world'); // 2
 ```
@@ -343,7 +343,7 @@ getWordCount('hello world'); // 2
 ## `isPalindrome`
 
 ```
-import { isPalindrome } from 'string-master';
+import { isPalindrome } from 'ts-string-utilities';
 
 isPalindrome('hello world'); // false
 ```
@@ -351,7 +351,7 @@ isPalindrome('hello world'); // false
 ## `isValidNumber`
 
 ```
-import { isValidNumber } from 'string-master';
+import { isValidNumber } from 'ts-string-utilities';
 
 isValidNumber('hello world'); // false
 ```
@@ -359,7 +359,7 @@ isValidNumber('hello world'); // false
 ## `joinArray`
 
 ```
-import { joinArray } from 'string-master';
+import { joinArray } from 'ts-string-utilities';
 
 joinArray(['hello', 'world']); // 'hello world'
 ```
@@ -367,7 +367,7 @@ joinArray(['hello', 'world']); // 'hello world'
 ## `longestContaining`
 
 ```
-import { longestContaining } from 'string-master';
+import { longestContaining } from 'ts-string-utilities';
 
 longestContaining('hello world', 'hello world'); // 'hello world'
 ```
@@ -375,7 +375,7 @@ longestContaining('hello world', 'hello world'); // 'hello world'
 ## `pad`
 
 ```
-import { pad } from 'string-master';
+import { pad } from 'ts-string-utilities';
 
 pad('hello world', 20, ' '); // 'hello world         '
 ```
@@ -383,7 +383,7 @@ pad('hello world', 20, ' '); // 'hello world         '
 ## `removeCharacters`
 
 ```
-import { removeCharacters } from 'string-master';
+import { removeCharacters } from 'ts-string-utilities';
 
 removeCharacters('hello world', 'l'); // 'heo word'
 ```
@@ -391,7 +391,7 @@ removeCharacters('hello world', 'l'); // 'heo word'
 ## `removeFirst`
 
 ```
-import { removeFirst } from 'string-master';
+import { removeFirst } from 'ts-string-utilities';
 
 removeFirst('hello world', 'l'); // 'heo world'
 ```
@@ -399,7 +399,7 @@ removeFirst('hello world', 'l'); // 'heo world'
 ## `removeLast`
 
 ```
-import { removeLast } from 'string-master';
+import { removeLast } from 'ts-string-utilities';
 
 removeLast('hello world', 'l'); // 'hello worl'
 ```
@@ -407,7 +407,7 @@ removeLast('hello world', 'l'); // 'hello worl'
 ## `removeSpecialCharacters`
 
 ```
-import { removeSpecialCharacters } from 'string-master';
+import { removeSpecialCharacters } from 'ts-string-utilities';
 
 removeSpecialCharacters('hello world'); // 'hello world'
 ```
@@ -415,7 +415,7 @@ removeSpecialCharacters('hello world'); // 'hello world'
 ## `removeSpaces`
 
 ```
-import { removeSpaces } from 'string-master';
+import { removeSpaces } from 'ts-string-utilities';
 
 removeSpaces('hello world'); // 'helloworld'
 ```
@@ -423,7 +423,7 @@ removeSpaces('hello world'); // 'helloworld'
 ## `removeWords`
 
 ```
-import { removeWords } from 'string-master';
+import { removeWords } from 'ts-string-utilities';
 
 removeWords('hello world', 'hello'); // 'world'
 ```
@@ -431,7 +431,7 @@ removeWords('hello world', 'hello'); // 'world'
 ## `replaceAll`
 
 ```
-import { replaceAll } from 'string-master';
+import { replaceAll } from 'ts-string-utilities';
 
 replaceAll('hello world', 'l', 'x'); // 'hexxo worxd'
 ```
@@ -439,7 +439,7 @@ replaceAll('hello world', 'l', 'x'); // 'hexxo worxd'
 ## `replaceMultiple`
 
 ```
-import { replaceMultiple } from 'string-master';
+import { replaceMultiple } from 'ts-string-utilities';
 
 replaceMultiple('hello world', { l: 'x', o: 'y' }); // 'hexxy wyrd'
 ```
@@ -447,7 +447,7 @@ replaceMultiple('hello world', { l: 'x', o: 'y' }); // 'hexxy wyrd'
 ## `replaceWords`
 
 ```
-import { replaceWords } from 'string-master';
+import { replaceWords } from 'ts-string-utilities';
 
 replaceWords('hello world', 'hello', 'hi'); // 'hi world'
 ```
@@ -455,7 +455,7 @@ replaceWords('hello world', 'hello', 'hi'); // 'hi world'
 ## `reverse`
 
 ```
-import { reverse } from 'string-master';
+import { reverse } from 'ts-string-utilities';
 
 reverse('hello world'); // 'dlrow olleh'
 ```
@@ -463,7 +463,7 @@ reverse('hello world'); // 'dlrow olleh'
 ## `shortestContaining`
 
 ```
-import { shortestContaining } from 'string-master';
+import { shortestContaining } from 'ts-string-utilities';
 
 shortestContaining('hello world', 'hello world'); // 'hello world'
 ```
@@ -471,7 +471,7 @@ shortestContaining('hello world', 'hello world'); // 'hello world'
 ## `split`
 
 ```
-import { split } from 'string-master';
+import { split } from 'ts-string-utilities';
 
 split('hello world'); // ['hello', 'world']
 ```
@@ -479,7 +479,7 @@ split('hello world'); // ['hello', 'world']
 ## `startsWith`
 
 ```
-import { startsWith } from 'string-master';
+import { startsWith } from 'ts-string-utilities';
 
 startsWith('hello world', 'hello'); // true
 ```
@@ -487,7 +487,7 @@ startsWith('hello world', 'hello'); // true
 ## `toCamelCase`
 
 ```
-import { toCamelCase } from 'string-master';
+import { toCamelCase } from 'ts-string-utilities';
 
 toCamelCase('hello world'); // 'helloWorld'
 ```
@@ -495,7 +495,7 @@ toCamelCase('hello world'); // 'helloWorld'
 ## `toKebabCase`
 
 ```
-import { toKebabCase } from 'string-master';
+import { toKebabCase } from 'ts-string-utilities';
 
 toKebabCase('hello world'); // 'hello-world'
 ```
@@ -503,7 +503,7 @@ toKebabCase('hello world'); // 'hello-world'
 ## `toPascalCase`
 
 ```
-import { toPascalCase } from 'string-master';
+import { toPascalCase } from 'ts-string-utilities';
 
 toPascalCase('hello world'); // 'HelloWorld'
 ```
@@ -511,7 +511,7 @@ toPascalCase('hello world'); // 'HelloWorld'
 ## `toSnakeCase`
 
 ```
-import { toSnakeCase } from 'string-master';
+import { toSnakeCase } from 'ts-string-utilities';
 
 toSnakeCase('hello world'); // 'hello_world'
 ```
@@ -519,7 +519,7 @@ toSnakeCase('hello world'); // 'hello_world'
 ## `toTitleCase`
 
 ```
-import { toTitleCase } from 'string-master';
+import { toTitleCase } from 'ts-string-utilities';
 
 toTitleCase('hello world'); // 'Hello World'
 ```
@@ -527,7 +527,7 @@ toTitleCase('hello world'); // 'Hello World'
 ## `toUpperCaseFirst`
 
 ```
-import { toUpperCaseFirst } from 'string-master';
+import { toUpperCaseFirst } from 'ts-string-utilities';
 
 toUpperCaseFirst('hello world'); // 'Hello world'
 ```
@@ -535,7 +535,7 @@ toUpperCaseFirst('hello world'); // 'Hello world'
 ## `truncate`
 
 ```
-import { truncate } from 'string-master';
+import { truncate } from 'ts-string-utilities';
 
 truncate('hello world', 5); // 'hello...'
 ```
