@@ -117,7 +117,7 @@
 To install the library, simply use npm:
 
 ```bash
-npm install string-master
+npm install ts-string-utilities // yarn add ts-string-utilities
 ```
 
 <br>
