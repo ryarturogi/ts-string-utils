@@ -20,6 +20,8 @@
 
 `findIndex`(str: string, substring: string) - Returns the index of the first occurrence of the given substring in the given string, or -1 if it is not found.
 
+`filter`(str: string, filter: string | RegExp, replaceWith: string = '', options: string = 'g') - Replaces all occurrences of the specified filter with the given replaceWith string in the input string, and allows for the option to specify RegExp flags for the filter.
+
 `format`(str: string, args: any[]) - Replaces placeholders in the given string with the corresponding values in the given args array.
 
 `getAllPosition`(str: string, substring: string) - Returns an array of all the indexes of a given substring in a string
@@ -186,6 +188,15 @@ findAllIndexes('hello world', 'l'); // [2, 3, 9]
 import { findIndex } from 'ts-string-utilities';
 
 findIndex('hello world', 'l'); // 2
+```
+
+## `filterString`
+
+```
+import { filterString } from 'ts-string-utilities';
+
+filterString('Hello world', 'l'); // 'Heo word'
+filterString('Hello world', /l/g, 'x'); // 'Hexxo worxd'
 ```
 
 ## `format`

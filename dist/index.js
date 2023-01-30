@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllPosition = exports.isValidNumber = exports.replaceMultiple = exports.commonSubstring = exports.shortestContaining = exports.longestContaining = exports.countWordsInString = exports.endsWith = exports.startsWith = exports.findIndex = exports.joinArray = exports.splitString = exports.removeCharacters = exports.getMatchingWords = exports.getAnagrams = exports.getRandomSubstring = exports.getStringDistance = exports.getCharFrequency = exports.getShortestWord = exports.getLongestWord = exports.getUniqueChars = exports.getLastChar = exports.getFirstChar = exports.getSpecialCharCount = exports.getDigitCount = exports.getLetterCount = exports.getWordCount = exports.countWords = exports.replaceWords = exports.removeWords = exports.removeLast = exports.removeFirst = exports.removeSpecialCharacters = exports.toLowerCaseFirst = exports.toUpperCaseFirst = exports.toPascalCase = exports.toKebabCase = exports.toSnakeCase = exports.toCamelCase = exports.randomize = exports.capitalize = exports.pad = exports.countOccurrences = exports.removeSpaces = exports.reverse = exports.isPalindrome = exports.format = exports.toTitleCase = exports.truncate = exports.replaceAll = void 0;
-exports.getLongestCommonSubstring = exports.getCommonSuffix = exports.getCommonPrefix = exports.findAllIndexes = void 0;
+exports.isValidNumber = exports.replaceMultiple = exports.commonSubstring = exports.shortestContaining = exports.longestContaining = exports.countWordsInString = exports.endsWith = exports.startsWith = exports.findIndex = exports.joinArray = exports.splitString = exports.removeCharacters = exports.getMatchingWords = exports.getAnagrams = exports.getRandomSubstring = exports.getStringDistance = exports.getCharFrequency = exports.getShortestWord = exports.getLongestWord = exports.getUniqueChars = exports.getLastChar = exports.getFirstChar = exports.getSpecialCharCount = exports.getDigitCount = exports.getLetterCount = exports.getWordCount = exports.countWords = exports.replaceWords = exports.removeWords = exports.removeLast = exports.removeFirst = exports.removeSpecialCharacters = exports.toLowerCaseFirst = exports.toUpperCaseFirst = exports.toPascalCase = exports.toKebabCase = exports.toSnakeCase = exports.toCamelCase = exports.randomize = exports.capitalize = exports.pad = exports.countOccurrences = exports.removeSpaces = exports.reverse = exports.isPalindrome = exports.format = exports.filterString = exports.toTitleCase = exports.truncate = exports.replaceAll = void 0;
+exports.contains = exports.removeDuplicates = exports.trimBoth = exports.trimRight = exports.trimLeft = exports.getNthIndex = exports.splitAt = exports.sliceString = exports.rightPad = exports.leftPad = exports.substringBetween = exports.substringAfter = exports.substringBefore = exports.wrapString = exports.insertString = exports.repeatString = exports.splitByLines = exports.splitByWords = exports.getLongestCommonSubstring = exports.getCommonSuffix = exports.getCommonPrefix = exports.findAllIndexes = exports.getAllPosition = void 0;
 const helpers_1 = require("./helpers");
 const replaceAll = (str, find, replace) => {
     return str.replace(new RegExp(find, 'g'), replace);
@@ -21,26 +21,92 @@ const toTitleCase = (str) => {
         .join(' ');
 };
 exports.toTitleCase = toTitleCase;
+const filterString = (str, filter = '', replaceWith = '', options = 'g') => {
+    const regex = typeof filter === 'string'
+        ? new RegExp(filter, options + (options.includes('g') ? '' : 'g'))
+        : filter;
+    return str.replace(regex, replaceWith);
+};
+exports.filterString = filterString;
 const format = (template, ...args) => {
-    return template.replace(/{(\d+)}/g, (match, i) => {
-        return typeof args[i] !== 'undefined' ? args[i] : match;
-    });
+    let result = '';
+    for (let i = 0; i < template.length; i++) {
+        const char = template[i];
+        if (char === '{') {
+            let placeholder = '';
+            i++;
+            while (template[i] !== '}') {
+                placeholder += template[i];
+                i++;
+            }
+            const argIndex = parseInt(placeholder, 10);
+            if (argIndex >= 0 && argIndex < args.length) {
+                result += args[argIndex].toString();
+            }
+            else {
+                result += '{' + placeholder + '}';
+            }
+        }
+        else {
+            result += char;
+        }
+    }
+    return result;
 };
 exports.format = format;
 const isPalindrome = (str) => {
-    return str === str.split('').reverse().join('');
+    if (!str)
+        return false;
+    let left = 0;
+    let right = str.length - 1;
+    while (left < right) {
+        if (str[left] !== str[right])
+            return false;
+        left++;
+        right--;
+    }
+    return true;
 };
 exports.isPalindrome = isPalindrome;
 const reverse = (str) => {
-    return str.split('').reverse().join('');
+    if (!str)
+        return str;
+    let result = '';
+    for (let i = str.length - 1; i >= 0; i--) {
+        result += str[i];
+    }
+    return result;
 };
 exports.reverse = reverse;
 const removeSpaces = (str) => {
-    return str.replace(/\s/g, '');
+    if (!str)
+        return str;
+    let result = '';
+    for (let i = 0; i < str.length; i++) {
+        if (str[i] !== ' ')
+            result += str[i];
+    }
+    return result;
 };
 exports.removeSpaces = removeSpaces;
 const countOccurrences = (str, substring) => {
-    return str.split(substring).length - 1;
+    if (!str || !substring)
+        return 0;
+    let count = 0;
+    let substringIndex = 0;
+    for (let i = 0; i < str.length; i++) {
+        if (str[i] === substring[substringIndex]) {
+            substringIndex++;
+        }
+        else {
+            substringIndex = 0;
+        }
+        if (substringIndex === substring.length) {
+            count++;
+            substringIndex = 0;
+        }
+    }
+    return count;
 };
 exports.countOccurrences = countOccurrences;
 const pad = (str, length, char) => {
@@ -52,7 +118,24 @@ const pad = (str, length, char) => {
 };
 exports.pad = pad;
 const capitalize = (str) => {
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    if (typeof str !== 'string')
+        throw new TypeError('Input must be a string');
+    let result = '';
+    let capitalizing = true;
+    for (let i = 0; i < str.length; i++) {
+        const char = str[i];
+        if (char === ' ') {
+            capitalizing = true;
+        }
+        else if (capitalizing) {
+            result += char.toUpperCase();
+            capitalizing = false;
+        }
+        else {
+            result += char.toLowerCase();
+        }
+    }
+    return result;
 };
 exports.capitalize = capitalize;
 const randomize = (str) => {
@@ -126,15 +209,33 @@ function toPascalCase(str) {
 }
 exports.toPascalCase = toPascalCase;
 const toUpperCaseFirst = (str) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    if (!str)
+        return '';
+    const firstChar = str.charCodeAt(0);
+    if (firstChar >= 97 && firstChar <= 122) {
+        return String.fromCharCode(firstChar - 32) + str.slice(1);
+    }
+    return str;
 };
 exports.toUpperCaseFirst = toUpperCaseFirst;
 const toLowerCaseFirst = (str) => {
-    return str.charAt(0).toLowerCase() + str.slice(1);
+    if (!str)
+        return '';
+    const firstChar = str.charCodeAt(0);
+    if (firstChar >= 65 && firstChar <= 90) {
+        return String.fromCharCode(firstChar + 32) + str.slice(1);
+    }
+    return str;
 };
 exports.toLowerCaseFirst = toLowerCaseFirst;
 const removeSpecialCharacters = (str) => {
-    return str.replace(/[^\w\s]/gi, '');
+    let result = '';
+    for (let i = 0; i < str.length; i++) {
+        if (/^[a-zA-Z0-9\s]+$/.test(str[i])) {
+            result += str[i];
+        }
+    }
+    return result;
 };
 exports.removeSpecialCharacters = removeSpecialCharacters;
 const removeFirst = (str, n) => {
@@ -153,61 +254,129 @@ const removeFirst = (str, n) => {
 };
 exports.removeFirst = removeFirst;
 const removeLast = (str, n) => {
-    if (n <= 0) {
+    if (typeof str !== 'string')
+        throw new Error('First argument must be string');
+    if (typeof n !== 'number')
+        throw new Error('Second argument must be number');
+    if (str.length === 0)
         return str;
-    }
+    if (n <= 0)
+        return str;
     return str.slice(0, -n);
 };
 exports.removeLast = removeLast;
 const removeWords = (str, words) => {
-    words.map((word) => {
+    if (typeof str !== 'string')
+        throw new Error('First argument must be string');
+    if (!Array.isArray(words))
+        throw new Error('Second argument must be an array of strings');
+    for (const word of words) {
+        if (typeof word !== 'string')
+            throw new Error('Array element must be string');
+    }
+    if (str.length === 0)
+        return str;
+    for (const word of words) {
         str = str.replace(new RegExp(`\\s*\\b${word}\\b\\s*`, 'gi'), ' ');
-    });
+    }
     return str.trim();
 };
 exports.removeWords = removeWords;
 const replaceWords = (str, words) => {
-    for (let word in words) {
+    if (typeof str !== 'string')
+        throw new Error('First argument must be string');
+    if (typeof words !== 'object')
+        throw new Error('Second argument must be an object');
+    for (const word in words) {
+        if (typeof words[word] !== 'string')
+            throw new Error('Object values must be string');
+    }
+    for (const word in words) {
         str = str.replace(new RegExp(`\\b${word}\\b`, 'gi'), words[word]);
     }
     return str;
 };
 exports.replaceWords = replaceWords;
 const countWords = (str) => {
+    if (typeof str !== 'string')
+        throw new Error('Input must be a string');
     if (str.length === 0)
         return 0;
-    return str.split(/\s+/g).length;
+    const words = str.match(/\b\w+\b/g) || [];
+    return words.length;
 };
 exports.countWords = countWords;
 const getWordCount = (str) => {
-    if (!str || /^\s*$/.test(str)) {
+    if (typeof str !== 'string')
+        throw new Error('Input must be a string');
+    if (!str || !str.trim().length)
         return 0;
-    }
-    return str.split(/\s+/).length;
+    const words = str.match(/\b\w+\b/g) || [];
+    return words.length;
 };
 exports.getWordCount = getWordCount;
 const getLetterCount = (str) => {
-    return (str.match(/[a-zA-Z]/g) || []).length;
+    if (!str) {
+        return 0;
+    }
+    let count = 0;
+    for (const char of str) {
+        if ((char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z')) {
+            count++;
+        }
+    }
+    return count;
 };
 exports.getLetterCount = getLetterCount;
 const getDigitCount = (str) => {
-    return str.replace(/[^0-9]/g, '').length;
+    if (!str) {
+        return 0;
+    }
+    let count = 0;
+    for (const char of str) {
+        if (char >= '0' && char <= '9') {
+            count++;
+        }
+    }
+    return count;
 };
 exports.getDigitCount = getDigitCount;
 const getSpecialCharCount = (str) => {
-    return (str.match(/[^a-zA-Z0-9\s]/g) || []).length;
+    if (!str) {
+        return 0;
+    }
+    let count = 0;
+    for (const char of str) {
+        if (!(char >= 'a' && char <= 'z') &&
+            !(char >= 'A' && char <= 'Z') &&
+            !(char >= '0' && char <= '9') &&
+            char !== ' ') {
+            count++;
+        }
+    }
+    return count;
 };
 exports.getSpecialCharCount = getSpecialCharCount;
 const getFirstChar = (str) => {
-    return str.charAt(0);
+    if (!str)
+        return '';
+    return str[0];
 };
 exports.getFirstChar = getFirstChar;
 const getLastChar = (str) => {
-    return str.slice(-1);
+    if (!str)
+        return '';
+    return str[str.length - 1];
 };
 exports.getLastChar = getLastChar;
 const getUniqueChars = (str) => {
-    return Array.from(new Set(str.split('').filter((char) => char !== ' ')));
+    const uniqueChars = new Set();
+    for (const char of str) {
+        if (char !== ' ') {
+            uniqueChars.add(char);
+        }
+    }
+    return Array.from(uniqueChars);
 };
 exports.getUniqueChars = getUniqueChars;
 const getLongestWord = (str) => {
@@ -222,14 +391,19 @@ const getLongestWord = (str) => {
 };
 exports.getLongestWord = getLongestWord;
 const getShortestWord = (str) => {
-    return str
-        .split(' ')
-        .reduce((a, b) => a.length < b.length ? a : a.length === b.length ? (a < b ? a : b) : b);
+    const words = str.split(' ');
+    let shortest = words[0];
+    for (let i = 1; i < words.length; i++) {
+        if (words[i].length < shortest.length) {
+            shortest = words[i];
+        }
+    }
+    return shortest;
 };
 exports.getShortestWord = getShortestWord;
 const getCharFrequency = (str) => {
     let charFrequency = new Map();
-    for (let char of str.split('')) {
+    for (let char of str) {
         charFrequency.set(char, (charFrequency.get(char) || 0) + 1);
     }
     return charFrequency;
@@ -268,11 +442,27 @@ const getStringDistance = (str, otherString) => {
 };
 exports.getStringDistance = getStringDistance;
 const getRandomSubstring = (str, length) => {
-    let start = Math.floor(Math.random() * (str.length - length));
-    return str.substring(start, start + length);
+    if (typeof str !== 'string') {
+        throw new Error('The first argument must be a string');
+    }
+    if (typeof length !== 'number') {
+        throw new Error('The second argument must be a number');
+    }
+    if (length < 1 || length > str.length) {
+        throw new Error('The length argument must be within the range [1, str.length]');
+    }
+    const randomIndex = Math.floor(Math.random() * (str.length - length + 1));
+    let result = '';
+    for (let i = 0; i < length; i++) {
+        result += str[randomIndex + i];
+    }
+    return result;
 };
 exports.getRandomSubstring = getRandomSubstring;
 const getAnagrams = (str) => {
+    if (typeof str !== 'string') {
+        throw new Error('The argument must be a string');
+    }
     let result = [];
     const anagramHelper = (prefix, remaining) => {
         if (remaining.length === 0) {
@@ -294,38 +484,133 @@ const getAnagrams = (str) => {
 };
 exports.getAnagrams = getAnagrams;
 const getMatchingWords = (str, dictionary) => {
-    return dictionary.filter((word) => word.toLowerCase() === str.toLowerCase());
+    if (typeof str !== 'string' || !Array.isArray(dictionary)) {
+        throw new Error('The first argument must be a string, the second argument must be an array');
+    }
+    const lowerCaseStr = str.toLowerCase();
+    const matchingWords = [];
+    for (let i = 0; i < dictionary.length; i++) {
+        if (dictionary[i].length !== str.length) {
+            continue;
+        }
+        let isMatch = true;
+        const lowerCaseWord = dictionary[i].toLowerCase();
+        for (let j = 0; j < str.length; j++) {
+            if (lowerCaseStr[j] !== lowerCaseWord[j]) {
+                isMatch = false;
+                break;
+            }
+        }
+        if (isMatch) {
+            matchingWords.push(dictionary[i]);
+        }
+    }
+    return matchingWords;
 };
 exports.getMatchingWords = getMatchingWords;
 const removeCharacters = (str, characters) => {
-    return str
-        .split('')
-        .filter((char) => !characters.includes(char))
-        .join('');
+    if (typeof str !== 'string' || typeof characters !== 'string') {
+        throw new Error('Both arguments must be strings');
+    }
+    let result = '';
+    for (let i = 0; i < str.length; i++) {
+        if (!characters.includes(str[i])) {
+            result += str[i];
+        }
+    }
+    return result;
 };
 exports.removeCharacters = removeCharacters;
 const splitString = (str, delimiter) => {
-    return str.split(delimiter);
+    if (typeof str !== 'string' || typeof delimiter !== 'string') {
+        throw new Error('Both arguments must be strings');
+    }
+    const result = [];
+    let start = 0;
+    for (let i = 0; i < str.length; i++) {
+        if (str.slice(i, i + delimiter.length) === delimiter) {
+            result.push(str.slice(start, i));
+            start = i + delimiter.length;
+        }
+    }
+    result.push(str.slice(start));
+    return result;
 };
 exports.splitString = splitString;
 const joinArray = (arr, delimiter) => {
-    return arr.join(delimiter);
+    if (!Array.isArray(arr) || typeof delimiter !== 'string') {
+        throw new Error('First argument must be an array of strings and the second argument must be a string');
+    }
+    let result = '';
+    for (let i = 0; i < arr.length; i++) {
+        if (typeof arr[i] !== 'string') {
+            throw new Error('All elements in the array must be strings');
+        }
+        result += arr[i];
+        if (i < arr.length - 1) {
+            result += delimiter;
+        }
+    }
+    return result;
 };
 exports.joinArray = joinArray;
 const findIndex = (str, substring) => {
-    return str.indexOf(substring);
+    if (typeof str !== 'string' || typeof substring !== 'string') {
+        throw new Error('Both arguments must be strings');
+    }
+    if (substring.length > str.length) {
+        return -1;
+    }
+    for (let i = 0; i < str.length - substring.length + 1; i++) {
+        let j = 0;
+        for (; j < substring.length; j++) {
+            if (str[i + j] !== substring[j]) {
+                break;
+            }
+        }
+        if (j === substring.length) {
+            return i;
+        }
+    }
+    return -1;
 };
 exports.findIndex = findIndex;
 const startsWith = (str, substring) => {
-    return str.startsWith(substring);
+    if (typeof str !== 'string' || typeof substring !== 'string') {
+        throw new Error('Both arguments must be strings');
+    }
+    if (substring.length > str.length) {
+        return false;
+    }
+    return substring === str.slice(0, substring.length);
 };
 exports.startsWith = startsWith;
 const endsWith = (str, substring) => {
-    return str.endsWith(substring);
+    let i = str.length - 1, j = substring.length - 1;
+    while (j >= 0 && i >= 0) {
+        if (str[i] !== substring[j])
+            return false;
+        i--;
+        j--;
+    }
+    return j < 0;
 };
 exports.endsWith = endsWith;
 const countWordsInString = (str) => {
-    return str.split(' ').length;
+    let count = 0, word = false;
+    for (let i = 0; i < str.length; i++) {
+        if (str[i] === ' ' || str[i] === '\t' || str[i] === '\n') {
+            if (word)
+                count++;
+            word = false;
+        }
+        else {
+            word = true;
+        }
+    }
+    if (word)
+        count++;
+    return count;
 };
 exports.countWordsInString = countWordsInString;
 const longestContaining = (str, characters) => {
@@ -390,7 +675,51 @@ const replaceMultiple = (str, replacements) => {
 };
 exports.replaceMultiple = replaceMultiple;
 const isValidNumber = (str) => {
-    return !isNaN(Number(str));
+    if (str === '')
+        return false;
+    let i = 0, n = str.length;
+    while (i < n && str[i] === ' ')
+        i++;
+    if (i < n && (str[i] === '+' || str[i] === '-'))
+        i++;
+    let num = 0, valid = false;
+    while (i < n && str[i] >= '0' && str[i] <= '9') {
+        num = num * 10 + Number(str[i]) - Number('0');
+        i++;
+        valid = true;
+    }
+    if (i < n && str[i] === '.') {
+        i++;
+        let tmp = 0, div = 1;
+        while (i < n && str[i] >= '0' && str[i] <= '9') {
+            tmp = tmp * 10 + Number(str[i]) - Number('0');
+            div *= 10;
+            i++;
+            valid = true;
+        }
+        num += tmp / div;
+    }
+    if (i < n && (str[i] === 'e' || str[i] === 'E')) {
+        i++;
+        let sign = 1;
+        if (i < n && str[i] === '+') {
+            i++;
+        }
+        else if (i < n && str[i] === '-') {
+            i++;
+            sign = -1;
+        }
+        let exp = 0;
+        while (i < n && str[i] >= '0' && str[i] <= '9') {
+            exp = exp * 10 + Number(str[i]) - Number('0');
+            i++;
+            valid = true;
+        }
+        num *= Math.pow(10, exp * sign);
+    }
+    while (i < n && str[i] === ' ')
+        i++;
+    return valid && i === n;
 };
 exports.isValidNumber = isValidNumber;
 const getAllPosition = (str, substring) => {
@@ -472,3 +801,161 @@ const getLongestCommonSubstring = (str1, str2) => {
     return longestCommonSubstring;
 };
 exports.getLongestCommonSubstring = getLongestCommonSubstring;
+const splitByWords = (text, separator = ' ') => {
+    let start = 0;
+    const words = [];
+    for (let i = 0; i < text.length; i++) {
+        if (text.substr(i, separator.length) === separator) {
+            words.push(text.substring(start, i));
+            start = i + separator.length;
+        }
+    }
+    words.push(text.substring(start));
+    return words;
+};
+exports.splitByWords = splitByWords;
+const splitByLines = (text, separator = '\n') => {
+    let start = 0;
+    const lines = [];
+    const separatorLength = separator.length;
+    for (let i = 0; i < text.length; i++) {
+        if (text.slice(i, i + separatorLength) === separator) {
+            lines.push(text.substring(start, i));
+            start = i + separatorLength;
+        }
+    }
+    lines.push(text.substring(start));
+    return lines;
+};
+exports.splitByLines = splitByLines;
+const repeatString = (text, count) => {
+    let result = '';
+    for (let i = 0; i < count; i++) {
+        result += text;
+    }
+    return result;
+};
+exports.repeatString = repeatString;
+const insertString = (text, insertion, index) => index > text.length
+    ? text + insertion
+    : text.slice(0, index) + insertion + text.slice(index);
+exports.insertString = insertString;
+const wrapString = (text, wrapLength, wrapWith = '\n') => {
+    const words = text.split(' ');
+    let line = '';
+    let result = '';
+    for (const word of words) {
+        if (line.length + word.length + wrapWith.length > wrapLength) {
+            result += line + wrapWith;
+            line = '';
+        }
+        line += word + ' ';
+    }
+    result += line;
+    return result.trim();
+};
+exports.wrapString = wrapString;
+const substringBefore = (text, search) => {
+    const index = text.indexOf(search);
+    return index !== -1 ? text.substring(0, index) : text;
+};
+exports.substringBefore = substringBefore;
+const substringAfter = (text, search) => {
+    const index = text.indexOf(search);
+    return index !== -1 ? text.substring(index + search.length) : text;
+};
+exports.substringAfter = substringAfter;
+const substringBetween = (text, start, end) => {
+    const startIndex = text.indexOf(start);
+    const endIndex = text.indexOf(end);
+    return startIndex !== -1 && endIndex !== -1
+        ? text.substring(startIndex + start.length, endIndex)
+        : '';
+};
+exports.substringBetween = substringBetween;
+const leftPad = (text, length, padWith = ' ') => {
+    while (text.length < length) {
+        text = padWith + text;
+    }
+    return text;
+};
+exports.leftPad = leftPad;
+const rightPad = (text, length, padWith = ' ') => {
+    while (text.length < length) {
+        text += padWith;
+    }
+    return text;
+};
+exports.rightPad = rightPad;
+const sliceString = (text, start, end = text.length) => {
+    let sliced = '';
+    for (let i = start; i < end && i < text.length; i++) {
+        sliced += text[i];
+    }
+    return sliced;
+};
+exports.sliceString = sliceString;
+const splitAt = (text, index) => {
+    let first = '';
+    let second = '';
+    for (let i = 0; i < text.length; i++) {
+        if (i < index) {
+            first += text[i];
+        }
+        else {
+            second += text[i];
+        }
+    }
+    return [first, second];
+};
+exports.splitAt = splitAt;
+const getNthIndex = (text, searchString, n) => {
+    let index = text.indexOf(searchString);
+    let count = 1;
+    while (index !== -1 && count < n) {
+        index = text.indexOf(searchString, index + searchString.length);
+        count++;
+    }
+    return index;
+};
+exports.getNthIndex = getNthIndex;
+const trimLeft = (text) => {
+    let start = 0;
+    while (start < text.length && text[start] === ' ') {
+        start++;
+    }
+    return text.substring(start);
+};
+exports.trimLeft = trimLeft;
+const trimRight = (text) => {
+    let end = text.length - 1;
+    while (end >= 0 && text[end] === ' ') {
+        end--;
+    }
+    return text.substring(0, end + 1);
+};
+exports.trimRight = trimRight;
+const trimBoth = (text) => (0, exports.trimRight)((0, exports.trimLeft)(text));
+exports.trimBoth = trimBoth;
+const removeDuplicates = (text) => {
+    let result = '';
+    for (let i = 0; i < text.length; i++) {
+        if (!result.includes(text[i])) {
+            result += text[i];
+        }
+    }
+    return result;
+};
+exports.removeDuplicates = removeDuplicates;
+const contains = (text, search) => {
+    let i = 0;
+    let j = 0;
+    while (i < text.length && j < search.length) {
+        if (text[i] === search[j]) {
+            j++;
+        }
+        i++;
+    }
+    return j === search.length;
+};
+exports.contains = contains;
