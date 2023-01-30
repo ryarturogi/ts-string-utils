@@ -112,6 +112,40 @@
 
 `truncate`(str: string, length: number, end: string) - Returns a new string with the given length, truncating the original string and adding the specified end string if the original string was longer than the specified length.
 
+`splitByWords`(text: string, separator: string = ' ') - Splits a string into an array of words separated by the specified separator.
+
+`splitByLines`(text: string) - Splits a string into an array of lines.
+
+`repeatString`(str: string, count: number) - Repeats the given string the specified number of times.
+
+`insertString`(str: string, index: number, insert: string) - Inserts the given string at the specified index in the given string.
+
+`substringBefore`(str: string, separator: string) - Returns the substring of the given string before the first occurrence of the given separator.
+
+`substringAfter`(str: string, separator: string) - Returns the substring of the given string after the first occurrence of the given separator.
+
+`substringBetween`(str: string, start: string, end: string) - Returns the substring of the given string between the first occurrence of the given start and end strings.
+
+`leftPad`(str: string, length: number, char: string) - Pads the given string with the given character to the given length on the left.
+
+`rightPad`(str: string, length: number, char: string) - Pads the given string with the given character to the given length on the right.
+
+`sliceString`(str: string, start: number, end: number) - Returns a new string with the characters between the specified start and end indices.
+
+`splitAt`(str: string, index: number) - Splits the given string at the specified index.
+
+`getNthIndex`(str: string, search: string, n: number) - Returns the index of the nth occurrence of the given search string in the given string.
+
+`trimLeft`(str: string, chars: string) - Trims the given characters from the left side of the given string.
+
+`trimRight`(str: string, chars: string) - Trims the given characters from the right side of the given string.
+
+`trimBoth`(str: string, chars: string) - Trims the given characters from both sides of the given string.
+
+`removeDuplicates`(str: string) - Removes duplicate characters from the given string.
+
+`contains`(str: string, search: string) - Returns true if the given string contains the given search string, false otherwise.
+
 <br>
 
 # Installation
@@ -549,6 +583,150 @@ toUpperCaseFirst('hello world'); // 'Hello world'
 import { truncate } from 'ts-string-utilities';
 
 truncate('hello world', 5); // 'hello...'
+```
+
+## `splitByWords`
+
+```
+import { splitByWords } from 'ts-string-utilities';
+
+splitByWords('hello world'); // ['hello', 'world']
+```
+
+## `splitByLines`
+
+```
+import { splitByLines } from 'ts-string-utilities';
+
+splitByLines('hello\nworld'); // ['hello', 'world']
+```
+
+## `repeatString`
+
+```
+import { repeatString } from 'ts-string-utilities';
+
+repeatString('hello', 3); // 'hellohellohello'
+```
+
+## `insertString`
+
+```
+import { insertString } from 'ts-string-utilities';
+
+insertString('hello world', '!', 5); // 'hello! world'
+```
+
+## `wrapString`
+
+```
+import { wrapString } from 'ts-string-utilities';
+
+wrapString('hello world', '(', ')'); // '(hello world)'
+```
+
+## `substringBefore`
+
+```
+import { substringBefore } from 'ts-string-utilities';
+
+substringBefore('hello world', ' '); // 'hello'
+```
+
+## `substringAfter`
+
+```
+import { substringAfter } from 'ts-string-utilities';
+
+substringAfter('hello world', ' '); // 'world'
+```
+
+## `substringBetween`
+
+```
+import { substringBetween } from 'ts-string-utilities';
+
+substringBetween('hello world', ' ', ' '); // 'world'
+```
+
+## `leftPad`
+
+```
+import { leftPad } from 'ts-string-utilities';
+
+leftPad('hello world', 20, ' '); // '         hello world'
+```
+
+## `rightPad`
+
+```
+import { rightPad } from 'ts-string-utilities';
+
+rightPad('hello world', 20, ' '); // 'hello world         '
+```
+
+## `slideString`
+
+```
+import { slideString } from 'ts-string-utilities';
+
+slideString('hello world', 3); // 'lo worldh'
+```
+
+## `splitAt`
+
+```
+import { splitAt } from 'ts-string-utilities';
+
+splitAt('hello world', 3); // ['hel', 'lo world']
+```
+
+## `getNthIndex`
+
+```
+import { getNthIndex } from 'ts-string-utilities';
+
+getNthIndex('hello world', 'l', 2); // 3
+```
+
+## `trimLeft`
+
+```
+import { trimLeft } from 'ts-string-utilities';
+
+trimLeft(' hello world'); // 'hello world'
+```
+
+## `trimRight`
+
+```
+import { trimRight } from 'ts-string-utilities';
+
+trimRight('hello world '); // 'hello world'
+```
+
+## `trimBoth`
+
+```
+import { trimBoth } from 'ts-string-utilities';
+
+trimBoth(' hello world '); // 'hello world'
+```
+
+## `removeDuplicates`
+
+```
+import { removeDuplicates } from 'ts-string-utilities';
+
+removeDuplicates('hello world'); // 'helo wrd'
+```
+
+## `contains`
+
+```
+import { contains } from 'ts-string-utilities';
+
+contains('hello world', 'hello'); // true
 ```
 
 # License
