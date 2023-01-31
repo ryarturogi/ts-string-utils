@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isValidNumber = exports.replaceMultiple = exports.commonSubstring = exports.shortestContaining = exports.longestContaining = exports.countWordsInString = exports.endsWith = exports.startsWith = exports.findIndex = exports.joinArray = exports.splitString = exports.removeCharacters = exports.getMatchingWords = exports.getAnagrams = exports.getRandomSubstring = exports.getStringDistance = exports.getCharFrequency = exports.getShortestWord = exports.getLongestWord = exports.getUniqueChars = exports.getLastChar = exports.getFirstChar = exports.getSpecialCharCount = exports.getDigitCount = exports.getLetterCount = exports.getWordCount = exports.countWords = exports.replaceWords = exports.removeWords = exports.removeLast = exports.removeFirst = exports.removeSpecialCharacters = exports.toLowerCaseFirst = exports.toUpperCaseFirst = exports.toPascalCase = exports.toKebabCase = exports.toSnakeCase = exports.toCamelCase = exports.randomize = exports.capitalize = exports.pad = exports.countOccurrences = exports.removeSpaces = exports.reverse = exports.isPalindrome = exports.format = exports.filterString = exports.toTitleCase = exports.truncate = exports.replaceAll = void 0;
-exports.contains = exports.removeDuplicates = exports.trimBoth = exports.trimRight = exports.trimLeft = exports.getNthIndex = exports.splitAt = exports.sliceString = exports.rightPad = exports.leftPad = exports.substringBetween = exports.substringAfter = exports.substringBefore = exports.wrapString = exports.insertString = exports.repeatString = exports.splitByLines = exports.splitByWords = exports.getLongestCommonSubstring = exports.getCommonSuffix = exports.getCommonPrefix = exports.findAllIndexes = exports.getAllPosition = void 0;
+exports.splitByWords = exports.splitByLines = exports.shortestContaining = exports.reverse = exports.replaceWords = exports.replaceMultiple = exports.replaceAll = exports.removeWords = exports.removeSpecialCharacters = exports.removeSpaces = exports.removeLast = exports.removeFirst = exports.removeDuplicates = exports.removeCharacters = exports.randomize = exports.pad = exports.longestContaining = exports.joinArray = exports.isValidNumber = exports.isPalindrome = exports.insertString = exports.getWordCount = exports.getUniqueChars = exports.getStringDistance = exports.getSpecialCharCount = exports.getShortestWord = exports.getRandomSubstring = exports.getNthIndex = exports.getMatchingWords = exports.getLongestWord = exports.getLongestCommonSubstring = exports.getLetterCount = exports.getLastChar = exports.getFirstChar = exports.getDigitCount = exports.getCommonSuffix = exports.getCharFrequency = exports.getAnagrams = exports.getAllPosition = exports.format = exports.findIndex = exports.findAllIndexes = exports.filterString = exports.endsWith = exports.countWordsInString = exports.countWords = exports.countOccurrences = exports.contains = exports.commonSubstring = exports.capitalize = void 0;
+exports.getCommonPrefix = exports.repeatString = exports.substringBetween = exports.leftPad = exports.rightPad = exports.sliceString = exports.splitAt = exports.wrapString = exports.truncate = exports.trimRight = exports.trimLeft = exports.trimBoth = exports.toUpperCaseFirst = exports.toTitleCase = exports.toSnakeCase = exports.toPascalCase = exports.toLowerCaseFirst = exports.toKebabCase = exports.toCamelCase = exports.substringBefore = exports.substringAfter = exports.startsWith = exports.splitString = void 0;
 const helpers_1 = require("./helpers");
 const replaceAll = (str, find, replace) => {
     return str.replace(new RegExp(find, 'g'), replace);
@@ -12,6 +12,8 @@ const truncate = (str, length) => {
 };
 exports.truncate = truncate;
 const toTitleCase = (str) => {
+    if (!str)
+        return str;
     return str
         .toLowerCase()
         .split(' ')
@@ -22,6 +24,8 @@ const toTitleCase = (str) => {
 };
 exports.toTitleCase = toTitleCase;
 const filterString = (str, filter = '', replaceWith = '', options = 'g') => {
+    if (!str)
+        return str;
     const regex = typeof filter === 'string'
         ? new RegExp(filter, options + (options.includes('g') ? '' : 'g'))
         : filter;
@@ -29,6 +33,8 @@ const filterString = (str, filter = '', replaceWith = '', options = 'g') => {
 };
 exports.filterString = filterString;
 const format = (template, ...args) => {
+    if (!template)
+        return template;
     let result = '';
     for (let i = 0; i < template.length; i++) {
         const char = template[i];
@@ -55,15 +61,21 @@ const format = (template, ...args) => {
 };
 exports.format = format;
 const isPalindrome = (str) => {
-    if (!str)
-        return false;
-    let left = 0;
-    let right = str.length - 1;
-    while (left < right) {
-        if (str[left] !== str[right])
+    let cleaned = '';
+    for (let i = 0; i < str.length; i++) {
+        const char = str[i].toLowerCase();
+        if ((char >= 'a' && char <= 'z') || (char >= '0' && char <= '9')) {
+            cleaned += char;
+        }
+    }
+    let start = 0;
+    let end = cleaned.length - 1;
+    while (start < end) {
+        if (cleaned[start] !== cleaned[end]) {
             return false;
-        left++;
-        right--;
+        }
+        start++;
+        end--;
     }
     return true;
 };
@@ -141,21 +153,21 @@ exports.capitalize = capitalize;
 const randomize = (str) => {
     let arr = str.split('');
     let n = arr.length;
-    for (let i = 0; i < n - 1; i++) {
-        let j = i + Math.floor(Math.random() * (n - i));
-        let tmp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = tmp;
+    for (let i = 0; i < 10; i++) {
+        // shuffle the array 10 times
+        for (let j = 0; j < n - 1; j++) {
+            let k = j + Math.floor(Math.random() * (n - j));
+            let tmp = arr[j];
+            arr[j] = arr[k];
+            arr[k] = tmp;
+        }
     }
     return arr.join('');
 };
 exports.randomize = randomize;
-function toCamelCase(str) {
+const toCamelCase = (str) => {
     if (str === null) {
         return '';
-    }
-    function replacer(_, p1) {
-        return (0, exports.capitalize)(p1.toLowerCase());
     }
     const RE_WHITESPACE = /\s+/g;
     const RE_SPECIAL = /[-!"'(),–.:;<>?`{}|~\/\\\[\]_#$*&^@%]+/g; // eslint-disable-line no-useless-escape
@@ -165,9 +177,9 @@ function toCamelCase(str) {
     str = str.replace(RE_WHITESPACE, ' ');
     str = str.replace(RE_CAMEL, '$1 $2');
     str = str.trim();
-    str = (0, helpers_1.replace)(str, RE_TO_CAMEL, replacer);
+    str = (0, helpers_1.replace)(str, RE_TO_CAMEL, helpers_1.replacer);
     return str.charAt(0).toLowerCase() + str.slice(1);
-}
+};
 exports.toCamelCase = toCamelCase;
 const toSnakeCase = (str) => {
     if (!str)
@@ -178,7 +190,7 @@ const toSnakeCase = (str) => {
     return str.replace(/^_|_$/g, '');
 };
 exports.toSnakeCase = toSnakeCase;
-function toKebabCase(str) {
+const toKebabCase = (str) => {
     if (!str || str.trim() === '') {
         return '';
     }
@@ -188,14 +200,11 @@ function toKebabCase(str) {
         .replace(/[-]{2,}/g, '-')
         .replace(/^-/, '')
         .replace(/-$/, '');
-}
+};
 exports.toKebabCase = toKebabCase;
-function toPascalCase(str) {
+const toPascalCase = (str) => {
     if (str === null) {
         return '';
-    }
-    function replacer(_, p1) {
-        return (0, exports.capitalize)(p1.toLowerCase());
     }
     const RE_WHITESPACE = /\s+/g;
     const RE_SPECIAL = /[-!"'(),–.:;<>?`{}|~\/\\\[\]_#$*&^@%]+/g; // eslint-disable-line no-useless-escape
@@ -205,8 +214,8 @@ function toPascalCase(str) {
     str = str.replace(RE_WHITESPACE, ' ');
     str = str.replace(RE_CAMEL, '$1 $2');
     str = str.trim();
-    return (0, helpers_1.replace)(str, RE_TO_PASCAL, replacer);
-}
+    return (0, helpers_1.replace)(str, RE_TO_PASCAL, helpers_1.replacer);
+};
 exports.toPascalCase = toPascalCase;
 const toUpperCaseFirst = (str) => {
     if (!str)
@@ -802,15 +811,20 @@ const getLongestCommonSubstring = (str1, str2) => {
 };
 exports.getLongestCommonSubstring = getLongestCommonSubstring;
 const splitByWords = (text, separator = ' ') => {
-    let start = 0;
+    let currentWord = '';
     const words = [];
     for (let i = 0; i < text.length; i++) {
-        if (text.substr(i, separator.length) === separator) {
-            words.push(text.substring(start, i));
-            start = i + separator.length;
+        const currentChar = text.charAt(i);
+        if (currentChar === separator) {
+            words.push(currentWord);
+            currentWord = '';
+        }
+        else {
+            currentWord += currentChar;
         }
     }
-    words.push(text.substring(start));
+    if (currentWord)
+        words.push(currentWord);
     return words;
 };
 exports.splitByWords = splitByWords;
@@ -856,35 +870,101 @@ const wrapString = (text, wrapLength, wrapWith = '\n') => {
 };
 exports.wrapString = wrapString;
 const substringBefore = (text, search) => {
-    const index = text.indexOf(search);
-    return index !== -1 ? text.substring(0, index) : text;
+    let result = '';
+    let searchIndex = -1;
+    for (let i = 0; i < text.length; i++) {
+        result += text[i];
+        if (text[i] === search[0] && text.slice(i, i + search.length) === search) {
+            searchIndex = i;
+            break;
+        }
+    }
+    return searchIndex === -1 ? text : result.slice(0, searchIndex);
 };
 exports.substringBefore = substringBefore;
 const substringAfter = (text, search) => {
-    const index = text.indexOf(search);
-    return index !== -1 ? text.substring(index + search.length) : text;
+    let searchIndex = -1;
+    for (let i = 0; i < text.length; i++) {
+        let isMatch = true;
+        for (let j = 0; j < search.length; j++) {
+            if (text[i + j] !== search[j]) {
+                isMatch = false;
+                break;
+            }
+        }
+        if (isMatch) {
+            searchIndex = i;
+            break;
+        }
+    }
+    if (searchIndex === -1) {
+        return text;
+    }
+    return text.slice(searchIndex + search.length);
 };
 exports.substringAfter = substringAfter;
 const substringBetween = (text, start, end) => {
-    const startIndex = text.indexOf(start);
-    const endIndex = text.indexOf(end);
-    return startIndex !== -1 && endIndex !== -1
-        ? text.substring(startIndex + start.length, endIndex)
-        : '';
+    let startIndex = -1;
+    let endIndex = -1;
+    let startLen = start.length;
+    let endLen = end.length;
+    let textLen = text.length;
+    for (let i = 0; i < textLen - startLen + 1; i++) {
+        let j = 0;
+        for (; j < startLen; j++) {
+            if (text[i + j] !== start[j]) {
+                break;
+            }
+        }
+        if (j === startLen) {
+            startIndex = i;
+            break;
+        }
+    }
+    if (startIndex === -1) {
+        return '';
+    }
+    for (let i = startIndex + startLen; i < textLen - endLen + 1; i++) {
+        let j = 0;
+        for (; j < endLen; j++) {
+            if (text[i + j] !== end[j]) {
+                break;
+            }
+        }
+        if (j === endLen) {
+            endIndex = i;
+            break;
+        }
+    }
+    if (endIndex === -1) {
+        return '';
+    }
+    let result = '';
+    for (let i = startIndex + startLen; i < endIndex; i++) {
+        result += text[i];
+    }
+    return result;
 };
 exports.substringBetween = substringBetween;
 const leftPad = (text, length, padWith = ' ') => {
-    while (text.length < length) {
-        text = padWith + text;
+    let result = '';
+    let paddingLength = length - text.length;
+    while (paddingLength > 0) {
+        result += padWith;
+        paddingLength--;
     }
-    return text;
+    result += text;
+    return result;
 };
 exports.leftPad = leftPad;
 const rightPad = (text, length, padWith = ' ') => {
-    while (text.length < length) {
-        text += padWith;
+    let result = text;
+    let paddingLength = length - text.length;
+    while (paddingLength > 0) {
+        result += padWith;
+        paddingLength--;
     }
-    return text;
+    return result;
 };
 exports.rightPad = rightPad;
 const sliceString = (text, start, end = text.length) => {
@@ -921,7 +1001,7 @@ const getNthIndex = (text, searchString, n) => {
 exports.getNthIndex = getNthIndex;
 const trimLeft = (text) => {
     let start = 0;
-    while (start < text.length && text[start] === ' ') {
+    while (start < text.length && (text[start] === ' ' || text[start] === '\t')) {
         start++;
     }
     return text.substring(start);
@@ -929,13 +1009,13 @@ const trimLeft = (text) => {
 exports.trimLeft = trimLeft;
 const trimRight = (text) => {
     let end = text.length - 1;
-    while (end >= 0 && text[end] === ' ') {
+    while (end >= 0 && (text[end] === ' ' || text[end] === '\t')) {
         end--;
     }
     return text.substring(0, end + 1);
 };
 exports.trimRight = trimRight;
-const trimBoth = (text) => (0, exports.trimRight)((0, exports.trimLeft)(text));
+const trimBoth = (text) => trimRight(trimLeft(text));
 exports.trimBoth = trimBoth;
 const removeDuplicates = (text) => {
     let result = '';
