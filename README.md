@@ -6,7 +6,7 @@
 
 `capitalize`(str: string) - Capitalizes the first character of the given string.
 
-`commonSubstring`(str1: string, str2: string) - Returns the longest common substring of the two given strings.
+`commonSubstring`(string: string, quantity: number) - Returns the longest substring of a string that appears at least "n" times in the string.
 
 `countOccurrences`(str: string, substring: string) - Returns the number of occurrences of the given substring in the given string.
 
@@ -173,7 +173,7 @@ capitalize('hello world'); // 'Hello world'
 ```
 import { commonSubstring } from 'ts-string-utilities';
 
-commonSubstring('hello world', 'hello world'); // 'hello world'
+commonSubstring('hello world, hello world', 10); // 'hello worl'
 ```
 
 ## `countOccurrences`
